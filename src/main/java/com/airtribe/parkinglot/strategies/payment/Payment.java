@@ -1,6 +1,6 @@
 package com.airtribe.parkinglot.strategies.payment;
 
-public interface PaymentMethod {
+public interface Payment {
 
     void pay();
 }

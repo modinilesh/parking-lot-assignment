@@ -1,5 +1,8 @@
 package com.airtribe.parkinglot.entities;
 
+import lombok.Data;
+
+@Data
 public class Ticket {
     private String id;
     private Vehicle vehicle;
