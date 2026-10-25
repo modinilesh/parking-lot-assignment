@@ -1,21 +1,35 @@
 package com.airtribe.parkinglot.entities;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import lombok.Data;
-import lombok.Generated;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "parking_lots")
 public class ParkingLot {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long parkingLotId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long parkingLotId;
     private String parkingLotName;
     private String location;
     private String parkingLotOwner;
-    private List<ParkingFloor> floors;
+
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ParkingFloor> floors = new ArrayList<>();
 
     public ParkingLot(String parkingLotName, String location, String parkingLotOwner) {
         this.parkingLotName = parkingLotName;
@@ -23,11 +37,8 @@ public class ParkingLot {
         this.parkingLotOwner = parkingLotOwner;
     }
 
-    //capabilities
-        //parkVehicle(Vehicle vehicle)
-        //unparkVehicle(Ticket ticket)
-        //addFloors(ParkingFloor floor)
-        //getAvailableSlots()
-
-
+    public void addFloor(ParkingFloor floor) {
+        floors.add(floor);
+        floor.setParkingLot(this);
+    }
 }

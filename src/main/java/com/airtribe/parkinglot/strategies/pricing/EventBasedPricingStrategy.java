@@ -1,12 +1,17 @@
 package com.airtribe.parkinglot.strategies.pricing;
 
 import com.airtribe.parkinglot.entities.Ticket;
+import com.airtribe.parkinglot.enums.VehicleType;
 
-import java.util.Date;
+public class EventBasedPricingStrategy implements PricingStrategy {
 
-public class EventBasedPricingStrategy implements PricingStrategy{
     @Override
-    public double calculatePrice(Ticket ticket, Date exitTime) {
-        return 0;
+    public double calculatePrice(Ticket ticket) {
+        return switch (ticket.getVehicle().getVehicleType()) {
+            case BIKE -> 50;
+            case CAR -> 100;
+            case TRUCK -> 150;
+            case BUS -> 200;
+        };
     }
 }
